@@ -13,7 +13,7 @@ import data.remote.repository.NominatimRepository
 import kotlinx.coroutines.*
 import texts.BotTexts
 
-private const val BOT_TOKEN = "5883735351:AAGFBLb8VbACrTWJQUTD209RQZCvR5uWvd8"
+private const val BOT_TOKEN = "key"
 private const val TIMEOUT_TIME = 30
 
 class NominatimBot(private val nominatimRepository: NominatimRepository, private val pubsHandler: PubsHandler) {
