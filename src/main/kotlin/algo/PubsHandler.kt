@@ -6,7 +6,7 @@ import kotlin.math.*
 
 class PubsHandler {
 
-    class Vertex(
+    data class Vertex(
         var lat: Double,
         var lon: Double,
         var name: String,
@@ -25,15 +25,15 @@ class PubsHandler {
         }
     }
 
-    fun prepareData(places: Place, start: PlaceItem, finish: PlaceItem): ArrayList<Vertex> {
+    private fun prepareData(places: Place): ArrayList<Vertex> {
         val res: ArrayList<Vertex> = places.map {
             Vertex(it.lat.toDouble(), it.lon.toDouble(), it.display_name, it.importance)
         } as ArrayList<Vertex>
         return res
     }
 
-    fun findPath(places: Place, start: PlaceItem, finish: PlaceItem): ArrayList<Vertex> {
-        val g = prepareData(places, start, finish)
+    fun findPath(places: Place, start: PlaceItem): ArrayList<Vertex> {
+        val g = prepareData(places)
         g.sortBy { it.priority }
         g.reverse()
         val startVertex = Vertex(start.lat.toDouble(), start.lon.toDouble(), start.display_name, start.importance)
