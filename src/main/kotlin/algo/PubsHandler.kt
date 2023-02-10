@@ -7,10 +7,10 @@ import kotlin.math.*
 class PubsHandler {
 
     data class Vertex(
-        var lat: Double,
-        var lon: Double,
-        var name: String,
-        var priority: Double
+        val lat: Double,
+        val lon: Double,
+        val name: String,
+        val priority: Double
     ) {
         fun distanceTo(other: Vertex): Double {
             val dLat = Math.toRadians(other.lat - lat)

@@ -32,7 +32,7 @@ class NominatimBot(private val nominatimRepository: NominatimRepository, private
         }
     }
 
-    class ClientInfo(
+    data class ClientInfo(
         var status: Mode,
         var firstPlace: String,
         var secondPlace: String,
