@@ -12,15 +12,18 @@ import com.github.kotlintelegrambot.extensions.filters.Filter
 import com.github.kotlintelegrambot.logging.LogLevel
 import data.remote.repository.NominatimRepository
 import kotlinx.coroutines.*
+import properties.TelegramProperties
 import texts.BotTexts
+import java.io.IOException
+import java.util.Properties
 
-private const val BOT_TOKEN = ""
 private const val TIMEOUT_TIME = 30
 
 class NominatimBot(private val nominatimRepository: NominatimRepository, private val pubsHandler: PubsHandler) {
     fun createBot(): Bot {
+
         return bot {
-            token = BOT_TOKEN
+            token = TelegramProperties.telegramProperties.getProperty("BOT_TOKEN")
             timeout = TIMEOUT_TIME
             logLevel = LogLevel.Network.Body
 
@@ -286,6 +289,16 @@ class NominatimBot(private val nominatimRepository: NominatimRepository, private
                     waitingForNumber(chatId)
                     return
                 }
+
+                if (clients[chatId]!!.pubsCount < 0 || clients[chatId]!!.pubsCount > 50) {
+                    clients[chatId]!!.pubsCount = 0
+                    bot.sendMessage(
+                        chatId = ChatId.fromId(chatId),
+                        text = "Вы ввели неверное число -- введите еще раз"
+                    )
+                    return
+                }
+
                 bot.sendMessage(
                     chatId = ChatId.fromId(chatId),
                     text = BotTexts.AM_I_RIGHT +
